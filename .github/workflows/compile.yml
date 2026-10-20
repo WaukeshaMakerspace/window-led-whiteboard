@@ -1,0 +1,15 @@
+name: Compile sketch
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: arduino/setup-arduino-cli@v2
+      # The sketch.yaml profile pins the board core and FastLED version.
+      - run: arduino-cli compile --profile nano src/WindowLedWhiteboard

@@ -1,0 +1,17 @@
+# Pinned build profiles for arduino-cli and CI.
+# Arduino IDE users: install the FastLED version listed here.
+profiles:
+  nano:
+    fqbn: arduino:avr:nano:cpu=atmega328
+    platforms:
+      - platform: arduino:avr (1.8.8)
+    libraries:
+      - FastLED (3.10.6)
+  # Most clone Nanos ship with the old bootloader and need this to upload.
+  nano-old-bootloader:
+    fqbn: arduino:avr:nano:cpu=atmega328old
+    platforms:
+      - platform: arduino:avr (1.8.8)
+    libraries:
+      - FastLED (3.10.6)
+default_profile: nano

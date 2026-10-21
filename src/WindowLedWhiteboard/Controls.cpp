@@ -27,6 +27,10 @@ bool Button::pressed(uint32_t now) {
   return down;
 }
 
+void Light::set(bool on) {
+  analogWrite(pin_, on ? LIGHT_ON : LIGHT_GLOW);
+}
+
 void Knob::begin() {
   uint16_t reading = analogRead(pin_);
   filtered_ = reading << 3;

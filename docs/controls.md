@@ -1,6 +1,6 @@
 # Controls
 
-A single-gang wall plate with a brightness knob and four buttons.
+A 3D printed single-gang wall plate with a brightness knob and four lit buttons. The Nano is mounted on the back of the plate.
 
 ## Using it
 
@@ -10,6 +10,8 @@ A single-gang wall plate with a brightness knob and four buttons.
 | **White** | Full white, for using the window as a lit whiteboard. Press again for the next shade: bright, neutral, warm. |
 | **Back** / **Next** | Previous or next pattern. From white, either one goes back to the last pattern. |
 | **Auto** | Rotates through the patterns, 3 minutes each. Press again to stay on the current pattern. Any other button also stops it. |
+
+The button lights show what the window is doing: **White** stays lit in white mode, **Auto** stays lit while rotating, and **Back** and **Next** flash when pressed. All four glow faintly the rest of the time, so the plate is easy to find in a dark room.
 
 After a power cut the window comes back in the same mode, shade, and pattern. The brightness always follows the knob.
 
@@ -38,7 +40,7 @@ Ideas for later: fireplace, fireworks, storm, bouncing balls, holiday palettes, 
 
 ## The plate
 
-A blank single-gang wall plate (2.75" × 4.5"), stainless steel or nylon, drilled for the knob and four 12 mm buttons and engraved with the labels.
+A 3D printed plate at standard single-gang size, so it mounts like a light switch cover.
 
 ```
  ┌───────────────┐
@@ -54,27 +56,19 @@ A blank single-gang wall plate (2.75" × 4.5"), stainless steel or nylon, drille
  └───────────────┘
 ```
 
-- Drill holes to match the parts you buy: the knob's threaded shaft and the buttons' bodies vary by model.
-- Everything on the plate is 5 V, so it mounts on a **low-voltage mounting bracket** (an open ring that clamps into a hole in the drywall) instead of an electrical box. Check that the knob and button bodies fit through the bracket's opening before drilling.
-- **Never put the plate in a box that also holds 120 V wiring.**
+| Detail | Value |
+|--------|-------|
+| Outline | 2.75" × 4.5" (69.85 × 114.3 mm), standard single gang |
+| Screw holes | On the center line, 3.28" (83.3 mm) apart, for 6-32 screws |
+| Face thickness | About 3 mm, within the clamping range of most panel buttons and pots |
+| Buttons | 12 mm momentary, normally open, with a 5 V LED ring. 16 mm buttons need a "midway" size plate (same screw spacing, larger outline). |
+| Knob | 10k linear potentiometer (B10K) with a panel nut |
+| Material | PETG or ASA. Both handle heat and stress better than PLA. |
+| Labels | Raised or recessed text, a two-color print, or a laser-engraved overlay |
 
-## Wiring
+- Size the button and knob holes to the parts you actually buy; models vary.
+- The Nano mounts on the back of the plate (for example on a small perfboard with the resistor, diode, and capacitor). Leave room for it below or beside the button and knob bodies, and make sure everything fits through the box or bracket opening.
+- To reprogram the Nano, take out the two plate screws and ease the plate out to reach its USB port.
+- Mount it on a single-gang box or a low-voltage mounting bracket. **Never in a box that also holds 120 V wiring.**
 
-A Cat5e or Cat6 cable runs from the plate to the Nano. Its 8 wires are exactly enough:
-
-| Cat5 wire | Signal | Nano pin | At the plate |
-|-----------|--------|----------|--------------|
-| Orange | 5 V | 5V | Knob outer leg |
-| White/orange | Ground | GND | Knob other outer leg, and one leg of every button |
-| Blue | Knob | A0 | Knob middle leg |
-| White/blue | Ground | GND | Second ground, twisted with the knob signal to keep it quiet |
-| Green | White button | D2 | White button's other leg |
-| White/green | Back button | D3 | Back button's other leg |
-| Brown | Next button | D4 | Next button's other leg |
-| White/brown | Auto button | D5 | Auto button's other leg |
-
-- The buttons need no resistors; the Nano's internal pull-ups handle it.
-- Put a **0.1 µF ceramic capacitor** from A0 to GND at the Nano end. It keeps the brightness from wavering on a long cable.
-- If the knob works backwards, swap its two outer legs.
-
-The pins, the Auto interval, and the knob's end points are set in [`Config.h`](../src/WindowLedWhiteboard/Config.h).
+Wiring for the plate is in [wiring.md](wiring.md#inside-the-plate). The pins, light levels, Auto interval, and the knob's end points are set in [`Config.h`](../src/WindowLedWhiteboard/Config.h).

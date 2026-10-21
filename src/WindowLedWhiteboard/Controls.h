@@ -19,6 +19,17 @@ class Button {
   uint32_t lastChangeMs_ = 0;
 };
 
+// A button's light (a 5 V LED) between a PWM pin and ground.
+class Light {
+ public:
+  explicit Light(uint8_t pin) : pin_(pin) {}
+  // Bright when on, a faint glow when off.
+  void set(bool on);
+
+ private:
+  uint8_t pin_;
+};
+
 // A 10k linear potentiometer: outer legs to 5 V and ground, middle leg to
 // the pin.
 class Knob {

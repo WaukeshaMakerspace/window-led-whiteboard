@@ -7,7 +7,7 @@ Worst case is every LED at full white and full brightness. The WS2812B datasheet
 | Load | Current |
 |------|---------|
 | 380 LEDs × 60 mA | 22.8 A |
-| Arduino Nano | ~0.05 A |
+| Arduino Nano and button lights | ~0.1 A |
 | **Total** | **~23 A (about 115 W)** |
 
 With 25% headroom the minimum is about 29 A, so anything below a 30 A supply is too small.

@@ -7,6 +7,8 @@
 //   Back   previous pattern
 //   Next   next pattern
 //   Auto   rotate through the patterns; press again to stay on the current one
+// Each button has a light: White and Auto stay lit while active, Back and
+// Next flash when pressed, and all of them glow faintly otherwise.
 
 #include <EEPROM.h>
 #include <FastLED.h>
@@ -22,6 +24,11 @@ Button whiteButton(WHITE_BUTTON_PIN);
 Button backButton(BACK_BUTTON_PIN);
 Button nextButton(NEXT_BUTTON_PIN);
 Button autoButton(AUTO_BUTTON_PIN);
+
+Light whiteLight(WHITE_LIGHT_PIN);
+Light backLight(BACK_LIGHT_PIN);
+Light nextLight(NEXT_LIGHT_PIN);
+Light autoLight(AUTO_LIGHT_PIN);
 
 // Bright, neutral, and warm white.
 const uint32_t WHITE_SHADES[] PROGMEM = {0xFFFFFF, 0xFFD7A0, 0xFFA046};
@@ -49,6 +56,8 @@ bool saveNeeded = false;
 uint32_t lastUserChangeMs = 0;
 uint32_t lastAutoStepMs = 0;
 uint32_t lastFrameMs = 0;
+uint32_t backFlashUntilMs = 0;
+uint32_t nextFlashUntilMs = 0;
 
 void loadState() {
   EEPROM.get(0, state);
@@ -82,11 +91,13 @@ void handleButtons(uint32_t now) {
   if (backButton.pressed(now)) {
     showPattern(state.white ? state.pattern : (state.pattern + PATTERN_COUNT - 1) % PATTERN_COUNT);
     state.autoCycle = false;
+    backFlashUntilMs = now + LIGHT_FLASH_MS;
     userChanged(now);
   }
   if (nextButton.pressed(now)) {
     showPattern(state.white ? state.pattern : (state.pattern + 1) % PATTERN_COUNT);
     state.autoCycle = false;
+    nextFlashUntilMs = now + LIGHT_FLASH_MS;
     userChanged(now);
   }
 
@@ -98,6 +109,14 @@ void handleButtons(uint32_t now) {
     }
     userChanged(now);
   }
+}
+
+void updateLights(uint32_t now) {
+  whiteLight.set(state.white);
+  autoLight.set(state.autoCycle);
+  // Signed difference so the comparison survives millis() wrapping.
+  backLight.set(int32_t(backFlashUntilMs - now) > 0);
+  nextLight.set(int32_t(nextFlashUntilMs - now) > 0);
 }
 
 void setup() {
@@ -114,6 +133,7 @@ void setup() {
   autoButton.begin();
 
   loadState();
+  updateLights(millis());
 }
 
 void loop() {
@@ -136,6 +156,7 @@ void loop() {
   if (now - lastFrameMs < FRAME_MS) return;
   lastFrameMs = now;
 
+  updateLights(now);
   FastLED.setBrightness(knob.brightness());
   if (state.white) {
     fill_solid(leds, NUM_LEDS, CRGB(pgm_read_dword(&WHITE_SHADES[state.shade])));

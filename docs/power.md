@@ -25,7 +25,7 @@ The smaller LRS-150-5 (22 A) cannot cover full white. Unbranded "5V 40A" supplie
 
 ## Software ceiling
 
-The sketch calls `FastLED.setMaxPowerInVoltsAndMilliamps(5, MAX_MILLIAMPS)`, which dims the whole frame whenever FastLED estimates the draw would exceed the limit. It is set to 32 A (80% of the supply). With 380 LEDs the strip can never reach that, so it never dims anything today; it exists so that adding LEDs or changing the supply later cannot silently overload things. Lower it if you ever want a hard cap on heat or power.
+The sketch calls `FastLED.setMaxPowerInVoltsAndMilliamps(5, MAX_MILLIAMPS)`, which dims the whole frame whenever FastLED estimates the draw would exceed the limit. `MAX_MILLIAMPS` in `Config.h` is set to 32 A (80% of the supply). With 380 LEDs the strip can never reach that, so it never dims anything today; it exists so that adding LEDs or changing the supply later cannot silently overload things. Lower it if you ever want a hard cap on heat or power.
 
 ## Power injection
 
@@ -62,9 +62,8 @@ At full white the middle feeders (B and C) carry up to about 8 A and the end fee
 
 After the injection wiring is done:
 
-1. In the sketch, temporarily set `BRIGHTNESS` to `255` and replace the `loop()` body with `fill_solid(leds, NUM_LEDS, CRGB::White); FastLED.show();`.
-2. Upload and let it run for a minute.
+1. Press **White** until the window is on bright white (the first shade), then turn the knob all the way up. This is the worst case, about 23 A.
+2. Let it run for a minute.
 3. With a multimeter, measure 5 V to GND at each injection point and at the LEDs halfway between points.
 4. Everything should read about **4.7 V or higher** and look the same shade of white. If a section reads lower or looks yellow, add an injection point there or use heavier wire.
 5. Feel the feeders and the supply. Warm is fine; hot means a wire is undersized.
-6. Restore the sketch.

@@ -10,6 +10,7 @@
 | Data input (LED 0) | TBD: which corner, which direction the strip runs |
 | Power supply enclosure | TBD |
 | Arduino Nano | TBD |
+| Control plate | TBD |
 | Power switch / plug | TBD |
 
 ## Photos
@@ -44,3 +45,6 @@ TODO: add photos to `docs/images/` and link them here:
 | Random flicker or wrong colors | Missing shared ground between Nano and strip, missing 330 Ω data resistor, or a long data wire |
 | First LED flickers or dies early | Missing 1000 µF capacitor at point A, or the strip was connected while powered |
 | Nano resets when the LEDs get bright | Nano is powered from USB instead of the supply, or a weak connection on the Nano 5V wire |
+| Knob works backwards | Its two outer legs are swapped. Swap them back. |
+| Brightness wavers with the knob untouched | Missing 0.1 µF capacitor from A0 to GND at the Nano, or a loose knob wire. See [controls.md](controls.md#wiring). |
+| One button does nothing | Its wire to the Nano or its ground connection at the plate is loose |

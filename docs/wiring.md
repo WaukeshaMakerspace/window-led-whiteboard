@@ -40,6 +40,10 @@ The Nano is 5 V logic, so no level shifter is needed. (An ESP32 would need a 74A
 
 Keep the Nano close to LED 0 so the data wire is short, ideally under 30 cm.
 
+## Control plate
+
+The wall plate (brightness knob and four buttons) connects to the Nano over a Cat5 cable: 5 V, ground, A0 for the knob, and D2 to D5 for the buttons. The pin-by-pin table is in [controls.md](controls.md#wiring). The cable can be as long as needed, because the Nano stays by the strip and only the data wire has to be short.
+
 ## AC side
 
 - The LRS-200-5 has open screw terminals carrying 120 V. It must live inside a closed enclosure.

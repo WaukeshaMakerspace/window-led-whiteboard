@@ -7,8 +7,9 @@ The window at Waukesha Makerspace that used to hold a whiteboard now holds 380 i
 - [x] LEDs installed in the window
 - [ ] 5 V power supply purchased (see [hardware/bom.md](hardware/bom.md))
 - [ ] Power injection wired (see [docs/power.md](docs/power.md))
-- [x] Starter sketch (slow rainbow) that proves the wiring works
-- [ ] Real patterns and messages
+- [x] Firmware: brightness knob, White / Back / Next / Auto buttons, 14 patterns
+- [ ] Control plate built and mounted (see [docs/controls.md](docs/controls.md))
+- [ ] More patterns (fireplace, fireworks, holidays, and others)
 
 ## Hardware at a glance
 
@@ -18,16 +19,24 @@ The window at Waukesha Makerspace that used to hold a whiteboard now holds 380 i
 | Controller | Arduino Nano (ATmega328P, 5 V logic) |
 | Power supply | Mean Well LRS-200-5 (5 V, 40 A, 200 W), 120 V AC in |
 | Worst case draw | ~23 A at full white, full brightness |
+| Controls | Single-gang wall plate: brightness knob, White, Back, Next, Auto |
 
-Full details: [power budget and injection plan](docs/power.md), [wiring](docs/wiring.md), [installation and servicing](docs/install.md), [bill of materials](hardware/bom.md).
+Full details: [controls and patterns](docs/controls.md), [power budget and injection plan](docs/power.md), [wiring](docs/wiring.md), [installation and servicing](docs/install.md), [bill of materials](hardware/bom.md).
+
+## Using it
+
+Turn the knob for brightness (all the way down is off). **White** lights the window as a whiteboard; press it again for a warmer shade. **Back** and **Next** step through the patterns, and **Auto** rotates through them on its own. Details in [docs/controls.md](docs/controls.md).
 
 ## Repo layout
 
 ```
-docs/                       power budget, wiring, install and service notes
+docs/                       controls, power budget, wiring, install and service notes
 hardware/bom.md             parts list
 src/WindowLedWhiteboard/    the Arduino sketch (folder name must match the .ino)
-  WindowLedWhiteboard.ino
+  WindowLedWhiteboard.ino   modes, buttons, saving the current mode
+  Config.h                  pins, LED count, and tunable values
+  Controls.h/.cpp           knob and button handling
+  Patterns.h/.cpp           the patterns
   sketch.yaml               pinned board core and FastLED versions
 .github/workflows/          compiles the sketch on every push and pull request
 ```
